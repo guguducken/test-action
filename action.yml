@@ -1,0 +1,15 @@
+name: Test Action
+description: Get the Changed Path of New PR
+author: guguducken
+
+inputs:
+  action-token:
+    description: 'The user GitHub token for get data'
+    required: true
+
+runs:
+  using: 'node16'
+  main: 'src/index.js'
+branding:
+  icon: "arrow-down"
+  color: "blue"

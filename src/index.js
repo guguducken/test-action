@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const accseeToken = core.getInput("action_token");
+const accseeToken = core.getInput("action-token");
 
 async function run() {
     let oc = github.getOctokit(accseeToken);
