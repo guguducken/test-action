@@ -20,7 +20,9 @@ async function run() {
             pull_number: prNum,
         }
     )
-    core.info(JSON.stringify(pr));
+    const { head } = pr;
+    core.info(head.repo.full_name);
+    core.info(head.ref);
 }
 
 run();
