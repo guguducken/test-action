@@ -17,7 +17,7 @@ async function run() {
     const { data: pr } = await oc.rest.pulls.get(
         {
             ...repo,
-            prNum,
+            pull_number: prNum,
         }
     )
     core.info(JSON.stringify(pr));
