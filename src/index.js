@@ -14,7 +14,7 @@ async function run() {
         return;
     }
 
-    const { data: pr } = oc.rest.pulls.get(
+    const { data: pr } = await oc.rest.pulls.get(
         {
             ...repo,
             prNum,
