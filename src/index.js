@@ -19,8 +19,9 @@ async function run() {
         issue_number: prNum
     })
 
-    core.info(JSON.parse(comments));
-
+    for (const comment of comments) {
+        core.info(comment.body);
+    }
 }
 
 run();
