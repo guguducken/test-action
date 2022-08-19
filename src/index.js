@@ -19,7 +19,7 @@ async function run() {
         pull_number: prNum
     })
 
-    core.info(JSON.parse(comments))
+    core.info(JSON.stringify(comments))
 
     // for (const comment of comments) {
     //     core.info(comment.body);
