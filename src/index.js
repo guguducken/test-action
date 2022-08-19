@@ -14,16 +14,13 @@ async function run() {
         return;
     }
 
-    const { data: pr } = await oc.rest.pulls.get(
-        {
-            ...repo,
-            pull_number: prNum,
-        }
-    )
-    // const { head } = pr;
-    // core.info(head.repo.full_name);
-    // core.info(head.ref);
-    core.info(JSON.stringify(pr));
+    const { data: comments } = await oc.rest.pulls.listReviews({
+        ...github.context.repo,
+        pull_number: prNum
+    })
+
+    core.info(JSON.parse(comments));
+
 }
 
 run();
