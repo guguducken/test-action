@@ -14,9 +14,9 @@ async function run() {
         return;
     }
 
-    const { data: comments } = await oc.rest.pulls.get({
+    const { data: comments } = await oc.rest.issues.get({
         ...github.context.repo,
-        pull_number: prNum
+        issue_number: prNum
     })
 
     core.info(JSON.stringify(comments))
