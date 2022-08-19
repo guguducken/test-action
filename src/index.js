@@ -14,14 +14,16 @@ async function run() {
         return;
     }
 
-    const { data: comments } = await oc.rest.issues.listComments({
+    const { data: comments } = await oc.rest.pulls.get({
         ...github.context.repo,
-        issue_number: prNum
+        pull_number: prNum
     })
 
-    for (const comment of comments) {
-        core.info(comment.body);
-    }
+    core.info(JSON.parse(comments))
+
+    // for (const comment of comments) {
+    //     core.info(comment.body);
+    // }
 }
 
 run();
