@@ -14,7 +14,7 @@ async function run() {
         return;
     }
 
-    const { data: comments } = await oc.rest.pulls.get({
+    const { data: comments } = await oc.rest.pulls.listReviewComments({
         ...github.context.repo,
         pull_number: prNum
     })
