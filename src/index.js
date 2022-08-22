@@ -21,7 +21,12 @@ async function run() {
 
     core.info(JSON.stringify(comments))
 
-    const { data: user } = await oc.rest.pulls.get();
+    const { data: user } = await oc.rest.pulls.get(
+        {
+            ...github.context.repo,
+            pull_number: prNum
+        }
+    );
 
     core.info(JSON.stringify(user));
 
