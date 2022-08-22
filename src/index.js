@@ -20,8 +20,13 @@ async function run() {
     })
 
     let comment = comments[comments.length - 1];
-    core.info(comment.body);
-    core.info(comment.body_text);
+    await oc.rest.issues.updateComment(
+        {
+            ...github.context.repo,
+            comment_id: comment.id,
+            body: ">> " + comment.body + "You do not have permossion!"
+        }
+    )
 }
 
 run();
