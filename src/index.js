@@ -27,6 +27,12 @@ async function run() {
             body: "> " + comment.body + "\n\n" + "You do not have permossion!"
         }
     )
+
+    await oc.rest.reactions.createForIssueComment({
+        ...github.context.repo,
+        comment_id: comment.id,
+        content: "confused"
+    })
 }
 
 run();
