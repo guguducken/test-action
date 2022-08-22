@@ -13,13 +13,13 @@ async function run() {
     if (prNum === undefined) {
         return;
     }
-    const { data: { workflows } } = await oc.rest.actions.listRepoWorkflows(
+    const { data: { artifacts } } = await oc.rest.actions.listArtifactsForRepo(
         {
             owner: "matrixorigin",
             repo: "matrixone"
         }
     )
-    for (const work of workflows) {
+    for (const work of artifacts) {
         core.info(work.name);
     }
 
