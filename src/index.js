@@ -19,20 +19,9 @@ async function run() {
         issue_number: prNum
     })
 
-    core.info(JSON.stringify(comments))
-
-    const { data: user } = await oc.rest.pulls.get(
-        {
-            ...github.context.repo,
-            pull_number: prNum
-        }
-    );
-
-    core.info(JSON.stringify(user));
-
-    // for (const comment of comments) {
-    //     core.info(comment.body);
-    // }
+    let comment = comments[comments.length - 1];
+    core.info(comment.body);
+    core.info(comment.body_text);
 }
 
 run();
