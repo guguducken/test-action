@@ -23,7 +23,7 @@ async function run() {
 
     const { data: user } = await oc.rest.users.getAuthenticated();
 
-    core.info(user.login);
+    core.info(JSON.stringify(user));
 
     // for (const comment of comments) {
     //     core.info(comment.body);
