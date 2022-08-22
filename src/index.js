@@ -25,10 +25,7 @@ async function run() {
     )
     for (const run of workflow_runs) {
         core.info(run.name);
-        for (const pulls of run.pull_requests) {
-            core.info(pulls.number);
-            core.info(pulls.id);
-        }
+        core.info(JSON.stringify(run.pull_requests));
     }
 
 }
