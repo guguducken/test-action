@@ -24,11 +24,10 @@ async function run() {
         }
     )
     for (const run of workflow_runs) {
+        core.info(run.name);
         for (const pulls of run.pull_requests) {
-            if (pulls.number == github.context.payload.pull_request.number) {
-                core.info(run.name);
-                break;
-            }
+            core.info(pulls.number);
+            core.info(pulls.id);
         }
     }
 
