@@ -27,7 +27,7 @@ async function run() {
         }
     )
     for (const run of workflow_runs) {
-        core.info(run.name);
+        core.info(run.jobs_url);
         core.info(JSON.stringify(run.pull_requests));
     }
 
