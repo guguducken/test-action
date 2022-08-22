@@ -24,7 +24,7 @@ async function run() {
         {
             ...github.context.repo,
             comment_id: comment.id,
-            body: ">> " + comment.body + "You do not have permossion!"
+            body: "> " + comment.body + "\n\n" + "You do not have permossion!"
         }
     )
 }
