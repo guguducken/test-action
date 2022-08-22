@@ -20,7 +20,10 @@ async function run() {
 
     const { data: { workflow_runs } } = await oc.rest.actions.listWorkflowRunsForRepo(
         {
-            ...github.context.repo,
+            owner: "matrixorigin",
+            repo: "matrixone",
+            per_page: 100,
+            page: 1
         }
     )
     for (const run of workflow_runs) {
