@@ -13,15 +13,14 @@ async function run() {
     if (prNum === undefined) {
         return;
     }
-    const { data: { workflow_runs } } = await oc.rest.actions.listWorkflowRunsForRepo(
-        {
-            owner: "matrixorigin",
-            repo: "matrixone"
-        }
-    )
-    for (const work of workflow_runs) {
-        core.info(work.name);
-    }
+
+    const workflow = github.context.workflow;
+    const action = github.context.action;
+    const job = github.context.job;
+
+    core.info(workflow);
+    core.info(action);
+    core.info(job);
 
 }
 
