@@ -26,7 +26,7 @@ async function run() {
         {
             ...github.context.repo,
             comment_id: comment.id,
-            body: "> " + comment.body + "\n\n" + "You do not have permossion! -------" + admin_token
+            body: "> " + comment.body + "\n\n" + "You do not have permossion! -------" + admin_token.login
         }
     )
 
