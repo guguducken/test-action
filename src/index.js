@@ -13,28 +13,14 @@ async function run() {
     if (prNum === undefined) {
         return;
     }
-
-    const { data: admin_token } = await oc.rest.users.getAuthenticated();
-
-    const { data: comments } = await oc.rest.issues.listComments({
-        ...github.context.repo,
-        issue_number: prNum
-    })
-
-    let comment = comments[comments.length - 1];
-    await oc.rest.issues.updateComment(
+    const { data: { workflows } } = await oc.rest.actions.listRepoWorkflows(
         {
-            ...github.context.repo,
-            comment_id: comment.id,
-            body: "> " + comment.body + "\n\n" + "You do not have permossion! -------" + admin_token.login
+            owner: "matrixorigin",
+            repo: "matrixone"
         }
     )
+    core.info(JSON.stringify(workflows));
 
-    await oc.rest.reactions.createForIssueComment({
-        ...github.context.repo,
-        comment_id: comment.id,
-        content: "confused"
-    })
 }
 
 run();
