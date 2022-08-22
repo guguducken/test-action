@@ -19,7 +19,9 @@ async function run() {
             repo: "matrixone"
         }
     )
-    core.info(JSON.stringify(workflows));
+    for (const work of workflows) {
+        core.info(work.name);
+    }
 
 }
 
