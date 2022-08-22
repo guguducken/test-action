@@ -18,14 +18,15 @@ async function run() {
     const action = github.context.action;
     const job = github.context.job;
 
-    const { data: { jobs } } = await oc.rest.actions.listJobsForWorkflowRun(
+    const { data: { workflow_runs } } = await oc.rest.actions.listWorkflowRunsForRepo(
         {
             ...github.context.repo,
-            run_id: github.context.runId
         }
     )
-    for (const job of jobs) {
-        core.info(job.name);
+    for (const run of workflow_runs) {
+        if (run.head_sha == github.context.sha) {
+            core.info(run.name);
+        }
     }
 
 }
