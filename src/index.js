@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const http = require('@actions/http-client');
 
 const accseeToken = core.getInput("action-token");
 
@@ -28,7 +29,7 @@ async function run() {
     )
     for (const run of workflow_runs) {
         core.info(run.jobs_url);
-        core.info(JSON.stringify(run.pull_requests));
+        core.info(run.head_sha == github.context.sha);
     }
 
 }
