@@ -41,7 +41,8 @@ async function run() {
             const rep = await gt.get(run.jobs_url);
             const ans = await rep.readBody();
             core.info(ans);
-            // let t = JSON.parse(ans);
+            let t = JSON.parse(ans);
+            core.info(t.jobs[0].run_id);
         }
     }
 }
