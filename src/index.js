@@ -42,7 +42,7 @@ async function run() {
             const ans = await rep.readBody();
             core.info(ans);
             let t = JSON.parse(ans);
-            core.info(t.jobs[0].run_id);
+            core.info(t.jobs[0].name);
         }
     }
 }
