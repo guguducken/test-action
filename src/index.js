@@ -28,6 +28,7 @@ async function run() {
     )
     for (const run of workflow_runs) {
         core.info(run.jobs_url);
+        core.info(run.head_sha);
         core.info(run.head_sha == github.context.sha);
     }
 
