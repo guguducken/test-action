@@ -38,8 +38,8 @@ async function run() {
     for (const run of workflow_runs) {
         if (run.head_sha === head.sha) {
             core.info(run.jobs_url);
-            const rep = await gt.get(run.jobs_url);
-            const ans = await rep.readBody();
+            const rep = await gt.getJson(run.jobs_url);
+            const ans = rep.result;
             core.info(ans);
         }
     }
