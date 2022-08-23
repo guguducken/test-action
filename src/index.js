@@ -36,18 +36,13 @@ async function run() {
         }
     )
     for (const run of workflow_runs) {
-        if (run.head_sha == head.sha) {
+        if (run.head_sha === head.sha) {
             core.info(run.jobs_url);
             const rep = await gt.get(run.jobs_url);
             const ans = await rep.readBody();
-            core.info(ans)
+            core.info(ans);
         }
     }
-
-
-
-    gt.get();
-
 }
 
 run();
