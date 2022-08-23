@@ -26,10 +26,17 @@ async function run() {
             page: 1
         }
     )
+
+    const { data: { head } } = await oc.rest.pulls.get(
+        {
+            ...github.context.repo,
+            pull_number: prNum
+        }
+    )
     for (const run of workflow_runs) {
         core.info(run.jobs_url);
         core.info(run.head_sha);
-        core.info(run.head_sha == github.context.sha);
+        core.info(run.head_sha == head.sha);
     }
 
 }
