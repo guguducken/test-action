@@ -39,8 +39,8 @@ async function run() {
         if (run.head_sha === head.sha) {
             core.info(run.jobs_url);
             const rep = await gt.getJson(run.jobs_url);
-            const ans = rep.result;
-            core.info(ans);
+            const ans = JSON.parse(rep.result);
+            core.info(ans.toString());
         }
     }
 }
