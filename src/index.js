@@ -15,9 +15,7 @@ async function run() {
         return;
     }
 
-    const workflow = github.context.workflow;
-    const action = github.context.action;
-    const job = github.context.job;
+    const gt = new http.HttpClient();
 
     const { data: { workflow_runs } } = await oc.rest.actions.listWorkflowRunsForRepo(
         {
@@ -34,10 +32,16 @@ async function run() {
         }
     )
     for (const run of workflow_runs) {
-        core.info(run.jobs_url);
-        core.info(run.head_sha);
-        core.info(run.head_sha == head.sha);
+        if (run.head_sha == head.sha) {
+            const rep = await gt.get(run.jobs_url);
+            const ans = rep.readBody();
+            core.log(ans);
+        }
     }
+
+
+
+    gt.get();
 
 }
 
