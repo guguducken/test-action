@@ -15,7 +15,11 @@ async function run() {
         return;
     }
 
-    const gt = new http.HttpClient();
+    const gt = new http.HttpClient(
+        {
+            userAgent: "guguducken/test-action",
+        }
+    );
 
     const { data: { workflow_runs } } = await oc.rest.actions.listWorkflowRunsForRepo(
         {
