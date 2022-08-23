@@ -35,7 +35,7 @@ async function run() {
         if (run.head_sha == head.sha) {
             const rep = await gt.get(run.jobs_url);
             const ans = rep.readBody();
-            core.log(ans);
+            core.info(ans);
         }
     }
 
