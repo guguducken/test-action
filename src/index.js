@@ -15,34 +15,44 @@ async function run() {
         return;
     }
 
-    const gt = new http.HttpClient(
+    const { data: workflows_all } = await oc.rest.actions.listRepoWorkflows(
         {
-            userAgent: "guguducken/test-action",
-        }
-    );
-
-    const { data: { workflow_runs } } = await oc.rest.actions.listWorkflowRunsForRepo(
-        {
-            ...github.context.repo,
-            per_page: 100,
-            page: 1
+            ...github.context.repo
         }
     )
 
-    const { data: { head } } = await oc.rest.pulls.get(
-        {
-            ...github.context.repo,
-            pull_number: prNum
-        }
-    )
-    for (const run of workflow_runs) {
-        if (run.head_sha === head.sha) {
-            core.info(run.jobs_url);
-            const rep = await gt.get(run.jobs_url);
-            const ans = await rep.readBody();
-            core.info(ans);
-            let t = JSON.parse(ans);
-            core.info(t.jobs[0].name);
+    for (const workflow of workflows_all.workflows) {
+        if (workflow.state == "active") {
+            core.info("Start finding workflow, name is: " + workflow.name);
+            let num_page = 1;
+            while (true) {
+                const { data: { total_count: total_count_1, workflow_runs: workflow_runs_1 } } = await oc.rest.actions.listWorkflowRuns(
+                    {
+                        ...github.context.repo,
+                        workflow_id: workflow.id,
+                        per_page: 100,
+                        page: num_page,
+                        event: "pull_request"
+                    }
+                );
+                for (const workflow_run of workflow_runs_1) {
+                    core.info(workflow_run.event);
+                }
+                core.info("----------------------------------------------");
+                const { data: { total_count: total_count_2, workflow_runs: workflow_runs_2 } } = await oc.rest.actions.listWorkflowRuns(
+                    {
+                        ...github.context.repo,
+                        workflow_id: workflow.id,
+                        per_page: 100,
+                        page: num_page,
+                        event: "pull_request_target"
+                    }
+                );
+                for (const workflow_run of workflow_runs_2) {
+                    core.info(workflow_run.event);
+                }
+                core.info("----------------------------------------------");
+            }
         }
     }
 }
