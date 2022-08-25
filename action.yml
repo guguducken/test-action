@@ -6,6 +6,9 @@ inputs:
   action-token:
     description: 'The user GitHub token for get data'
     required: true
+  name-test:
+    description: 'The test name for get data'
+    required: false
 
 runs:
   using: 'node16'
