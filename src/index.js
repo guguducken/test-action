@@ -18,6 +18,7 @@ async function run() {
     }
 
     core.info(JSON.stringify(github.context.payload.pull_request.title));
+    core.info(JSON.stringify(github.context.payload.pull_request.body));
 
 
 }
