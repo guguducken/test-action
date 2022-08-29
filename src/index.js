@@ -17,8 +17,15 @@ async function run() {
         return;
     }
 
-    core.info(JSON.stringify(github.context.payload.pull_request.title));
-    core.info(JSON.stringify(github.context.payload.pull_request.body));
+    const { data: pr } = await oc.rest.pulls.get(
+        {
+            ...github.context.repo,
+            pull_number: prNum
+        }
+    );
+
+    core.info(pr.body);
+    core.info(pr.title);
 
 
 }
