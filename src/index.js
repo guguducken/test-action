@@ -19,8 +19,9 @@ async function run() {
 
     const { data: pr } = await oc.rest.pulls.get(
         {
-            ...github.context.repo,
-            pull_number: prNum
+            repo: "matrixone",
+            owner: "matrixorigin",
+            pull_number: 4742
         }
     );
 
