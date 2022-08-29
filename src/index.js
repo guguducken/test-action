@@ -17,22 +17,7 @@ async function run() {
         return;
     }
 
-    let t = "";
-    let package_go = new Array();
-    for (let i = 0; i < test_name.length; i++) {
-        const e = test_name[i];
-        if (e == " ") {
-            if (t.length != 0) {
-                package_go.push(t);
-                t = "";
-            }
-        } else {
-            t += e;
-        }
-    }
-    for (const pack of package_go) {
-        core.info(pack);
-    }
+    core.info(JSON.stringify(github.context.payload.pull_request));
 
 
 }
