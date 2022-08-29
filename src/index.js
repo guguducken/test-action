@@ -26,6 +26,12 @@ async function run() {
 
     core.info(pr.body);
 
+    for (let i = 0; i < pr.body.length; i++) {
+        const e = pr.body[i];
+        core.info(i + " : " + e);
+    }
+    core.info("-------------------------------------------------------");
+
     const index = pr.body.lastIndexOf("## This is test no 2");
     core.info(pr.body.substring(index));
     core.info(index);
