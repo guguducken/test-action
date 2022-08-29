@@ -27,16 +27,14 @@ async function run() {
 
     core.info(pr.body);
     core.info(JSON.stringify(pr.body));
-
-    for (let i = 0; i < pr.body.length; i++) {
-        const e = pr.body[i];
-        core.info(i + " : " + e);
-    }
     core.info("-------------------------------------------------------");
 
     const index = pr.body.lastIndexOf("## What this PR does / why we need it:");
     core.info(pr.body.substring(index));
     core.info(index);
+
+    core.info(pr.title);
+    core.info(pr.title.length);
 
 
 }
