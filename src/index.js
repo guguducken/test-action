@@ -24,8 +24,8 @@ async function run() {
         }
     );
 
-    core.info(pr.body);
-    core.info(pr.title);
+    const index = pr.title.lastIndexOf("## This is test no 2");
+    core.info(index);
 
 
 }
