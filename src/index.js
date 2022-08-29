@@ -25,6 +25,7 @@ async function run() {
     );
 
     core.info(pr.body);
+    core.info(JSON.stringify(pr.body));
 
     for (let i = 0; i < pr.body.length; i++) {
         const e = pr.body[i];
