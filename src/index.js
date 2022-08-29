@@ -34,7 +34,7 @@ async function run() {
     }
     core.info("-------------------------------------------------------");
 
-    const index = pr.body.lastIndexOf("## This is test no 2");
+    const index = pr.body.lastIndexOf("## What this PR does / why we need it:");
     core.info(pr.body.substring(index));
     core.info(index);
 
