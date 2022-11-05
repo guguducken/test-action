@@ -40,7 +40,12 @@ async function run() {
         if (iss === undefined) {
             core.info("finished");
         } else {
-            core.info(iss);
+            for (let i = 0; i < iss.length; i++) {
+                const e = iss[i];
+                if (e.pull_request === undefined) {
+                    core.info("This is PR, ", e);
+                }
+            }
         }
 
     }
