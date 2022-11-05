@@ -69,6 +69,8 @@ async function run() {
 
     core.info(day + " " + hour + " " + minute + " " + second + " " + millisecond);
 
+    core.info(test_name);
+
 }
 
 async function getIssues(now, num_page) {
