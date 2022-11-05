@@ -51,7 +51,8 @@ async function run() {
         }
     }
     let da = new Date();
-    core.info(da.getTime);
+    core.info(da);
+    core.info(da.getTime());
 
 }
 
