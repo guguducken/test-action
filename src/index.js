@@ -35,7 +35,7 @@ async function run() {
 
     // core.info(pr.title);
     // core.info(pr.title.length);
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 3; i++) {
         const iss = await getIssues(i, 100)
         if (iss === undefined) {
             core.info("finished");
@@ -49,8 +49,9 @@ async function run() {
                 }
             }
         }
-
     }
+    let da = Date.getTime();
+    core.info(da);
 
 }
 
