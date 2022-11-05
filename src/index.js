@@ -45,22 +45,23 @@ async function run() {
 
     }
 
-    async function getIssues(now, num_page) {
-        const { data: iss } = await oc.rest.issues.listForRepo(
-            {
-                ...repo,
-                state: "open",
-                sort: "created",
-                direction: "asc",
-                per_page: num_page,
-                page: now
-            }
-        )
-        if (iss.length == 0) {
-            return undefined
+}
+
+async function getIssues(now, num_page) {
+    const { data: iss } = await oc.rest.issues.listForRepo(
+        {
+            ...repo,
+            state: "open",
+            sort: "created",
+            direction: "asc",
+            per_page: num_page,
+            page: now
         }
-        return iss
+    )
+    if (iss.length == 0) {
+        return undefined
     }
+    return iss
 }
 
 run()
