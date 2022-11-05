@@ -61,5 +61,6 @@ async function run() {
         }
         return iss
     }
+}
 
-    run();
+run()
