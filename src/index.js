@@ -5,11 +5,11 @@ const http = require('@actions/http-client');
 const accseeToken = core.getInput("action-token");
 
 const test_name = core.getInput("name-test");
+let oc = github.getOctokit(accseeToken);
+const repo = github.context.repo;
 
 async function run() {
-    let oc = github.getOctokit(accseeToken);
 
-    const repo = github.context.repo;
 
     // const prNum = github.context.payload?.pull_request.number;
 
