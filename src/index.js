@@ -50,20 +50,20 @@ async function run() {
             }
         }
     }
-    let da = new Date().getTime();
-    let past = Date.parse("1970-02-01T00:00:00Z");
+    let da = Date.parse("1970-02-01T00:00:00Z");
+    let past = Date.parse("1970-01-01T00:00:00Z");
     let duration = da - past
     let millisecond = duration % 1000
-    duration /= 1000
+    duration //= 1000
 
     let second = duration % 60
-    duration /= 60
+    duration //= 60
 
     let minute = duration % 60
-    duration /= 60
+    duration //= 60
 
     let hour = duration % 24
-    duration /= 24
+    duration //= 24
 
     let day = duration
 
