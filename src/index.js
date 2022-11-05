@@ -57,7 +57,7 @@ async function run() {
     duration = duration / 1000
 
     let second = duration % 60
-    duration //= 60
+    duration = duration / 60
 
     let minute = duration % 60
     duration = duration / 60
