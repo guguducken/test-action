@@ -42,10 +42,10 @@ async function run() {
         } else {
             for (let i = 0; i < iss.length; i++) {
                 const e = iss[i];
-                if (e.pull_request === undefined) {
-                    core.info("This is PR, " + e);
+                if (e.pull_request !== undefined) {
+                    core.info("This is PR, " + e.toString());
                 } else {
-                    core.info(e);
+                    core.info(e.toString());
                 }
             }
         }
