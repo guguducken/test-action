@@ -43,9 +43,9 @@ async function run() {
             for (let i = 0; i < iss.length; i++) {
                 const e = iss[i];
                 if (e.pull_request !== undefined) {
-                    core.info("This is PR, " + e.toString());
+                    core.info("This is PR, " + e.title + " " + e.created_at);
                 } else {
-                    core.info(e.toString());
+                    core.info(e.title + " " + e.created_at);
                 }
             }
         }
