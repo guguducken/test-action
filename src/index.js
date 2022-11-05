@@ -50,8 +50,8 @@ async function run() {
             }
         }
     }
-    let da = Date.getTime();
-    core.info(da);
+    let da = new Date();
+    core.info(da.getTime);
 
 }
 
