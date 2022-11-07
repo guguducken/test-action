@@ -90,7 +90,7 @@ async function getPRTime(issue) {
         if (e.node === undefined || e.node.source === undefined) {
             core.info("skip " + issue.title + " " + i);
         } else {
-            core.info(e.node.source.title);
+            core.info(e.node.source.title + " " + e.node.source.updatedAt);
         }
     }
 }
