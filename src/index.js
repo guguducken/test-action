@@ -23,7 +23,7 @@ async function run() {
                     // core.info(e.pull_request.url);
                 } else {
                     core.info(e.title);
-                    getPRTime(e);
+                    await getPRTime(e);
                 }
             }
         }
