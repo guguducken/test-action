@@ -22,7 +22,6 @@ async function run() {
                     // core.info("This is PR, " + e.title + " " + e.created_at);
                     // core.info(e.pull_request.url);
                 } else {
-                    core.info(e.title);
                     await getLastPRUpdateTime(e);
                 }
             }
