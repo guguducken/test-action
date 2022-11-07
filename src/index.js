@@ -22,7 +22,10 @@ async function run() {
                     // core.info("This is PR, " + e.title + " " + e.created_at);
                     // core.info(e.pull_request.url);
                 } else {
-                    await getLastPRUpdateTime(e);
+                    let t = await getLastPRUpdateTime(e);
+                    if (t !== null) {
+                        core.info(JSON.stringify(t));
+                    }
                 }
             }
         }
@@ -104,7 +107,7 @@ async function getLastPRUpdateTime(issue) {
             }
         }
     }
-    core.info(JSON.stringify(lastPR));
+    return lastPR;
 }
 
 run()
