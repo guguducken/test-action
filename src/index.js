@@ -75,7 +75,7 @@ async function getPRTime(issue) {
     }
   }
 }`;
-    let { data: ans } = await oc.graphql(query, {
+    let ans = await oc.graphql(query, {
         "repo": repo.repo,
         "repo_owner": repo.owner,
         "number_iss": issue.number,
@@ -83,7 +83,7 @@ async function getPRTime(issue) {
         "Skip": 0
     });
     core.info(ans);
-    let ans_issue = JSON.parse(ans).repository.issue;
+    let ans_issue = JSON.parse(ans).data.repository.issue;
     let edges = ans.repository.issue.timelineItems.edges;
     for (let i = 0; i < edges.length; i++) {
         const e = edges[i];
