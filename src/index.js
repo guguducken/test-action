@@ -21,8 +21,7 @@ async function run() {
                     core.info("This is PR, " + e.title + " " + e.created_at);
                     core.info(e.pull_request.url);
                 } else {
-                    core.info(e.title + " " + e.number + " " + e.created_at + " " + e.updated_at);
-                    core.info(e.events_url);
+                    getPRTime(e);
                 }
             }
         }
@@ -45,6 +44,54 @@ async function getIssues(now, num_page) {
         return undefined
     }
     return iss
+}
+
+async function getPRTime(issue) {
+    let query = `query($repo:String!, $repo_owner: String!, $number_iss: Int!, $First: Int, $Skip: Int){
+  repository(name: $repo, owner: $repo_owner) {
+    issue(number: $number_iss) {
+      id
+      timelineItems(first: $First, skip: $Skip) {
+        updatedAt
+        edges {
+          node {
+            ... on CrossReferencedEvent {
+              id
+              referencedAt
+              source {
+                ... on PullRequest {
+                  id
+                  updatedAt
+                  title
+                }
+              }
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+        }
+      }
+    }
+  }
+}`;
+    let { data: ans } = await oc.graphql(query, {
+        "repo": repo.repo,
+        "repo_owner": repo.owner,
+        "number_iss": issue.number,
+        "First": 100,
+        "Skip": 0
+    });
+    let ans_issue = JSON.parse(ans).repository.issue;
+    let edges = ans.repository.issue.timelineItems.edges;
+    for (let i = 0; i < edges.length; i++) {
+        const e = edges[i];
+        if (e.node === {} || e.node.source === {}) {
+            core.info("skip " + i);
+        } else {
+            core.info(e.node.source.title);
+        }
+    }
 }
 
 run()
