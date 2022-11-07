@@ -77,14 +77,14 @@ async function getPRTime(issue) {
     }
   }
 }`;
-    let { repository: { issue } } = await oc.graphql(query, {
+    let { issue: issue_a } = await oc.graphql(query, {
         "repo": repo.repo,
         "repo_owner": repo.owner,
         "number_iss": issue.number,
         "First": 100,
         "Skip": 0
     });
-    let edges = issue.timelineItems.edges;
+    let edges = issue_a.timelineItems.edges;
     for (let i = 0; i < edges.length; i++) {
         const e = edges[i];
         if (e.node === undefined || e.node.source === undefined || Object.keys(e.node).length == 0 || Object.keys(e.node.source).length == 0) {
