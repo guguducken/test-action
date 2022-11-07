@@ -19,6 +19,7 @@ async function run() {
                 const e = iss[i];
                 if (e.pull_request !== undefined) {
                     core.info("This is PR, " + e.title + " " + e.created_at);
+                    core.info(e.pull_request.url);
                 } else {
                     core.info(e.title + " " + e.number + " " + e.created_at + " " + e.updated_at);
                     core.info(e.events_url);
