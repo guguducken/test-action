@@ -18,8 +18,8 @@ async function run() {
             for (let i = 0; i < iss.length; i++) {
                 const e = iss[i];
                 if (e.pull_request !== undefined) {
-                    core.info("This is PR, " + e.title + " " + e.created_at);
-                    core.info(e.pull_request.url);
+                    // core.info("This is PR, " + e.title + " " + e.created_at);
+                    // core.info(e.pull_request.url);
                 } else {
                     getPRTime(e);
                 }
