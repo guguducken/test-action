@@ -84,12 +84,11 @@ async function getPRTime(issue) {
         "First": 100,
         "Skip": 0
     });
-    let ans_issue = repository.issue;
     let edges = repository.issue.timelineItems.edges;
     for (let i = 0; i < edges.length; i++) {
         const e = edges[i];
         if (e.node === undefined || e.node.source === undefined) {
-            core.info("skip " + i);
+            core.info("skip " + issue.title + " " + i);
         } else {
             core.info(e.node.source.title);
         }
