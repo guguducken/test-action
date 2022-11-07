@@ -25,7 +25,10 @@ async function run() {
           let assig = "";
           for (let i = 0; i < e.assignees.length; i++) {
             const u = e.assignees[i];
-            assig = assig + "," + u.login;
+            assig = u.login + "," + assig;
+          }
+          if (assig[assig.length - 1] == ',') {
+            assig = assig.substring(0, assig.length - 1);
           }
           core.info(assig);
         }
