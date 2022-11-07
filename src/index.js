@@ -83,7 +83,7 @@ async function getLastPRUpdateTime(issue) {
     let start = 0;
     let per_page = 20;
     let lastUpdate = 0;
-    let lastPR;
+    let lastPR = null;
 
     while (hasNext) {
         let { repository } = await oc.graphql(query, {
