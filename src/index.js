@@ -26,7 +26,7 @@ async function run() {
                     // if (t !== null) {
                     //     core.info(JSON.stringify(t));
                     // }
-                    core.info(e.updated_at());
+                    core.info(e.updated_at);
                 }
             }
         }
