@@ -10,49 +10,50 @@ const repo = github.context.repo;
 
 async function run() {
 
-    for (let i = 1; i < 3; i++) {
-        const iss = await getIssues(i, 100)
-        if (iss === undefined) {
-            core.info("finished");
-            break;
+  for (let i = 1; i < 3; i++) {
+    const iss = await getIssues(i, 100)
+    if (iss === undefined) {
+      core.info("finished");
+      break;
+    } else {
+      for (let i = 0; i < iss.length; i++) {
+        const e = iss[i];
+        if (e.pull_request !== undefined) {
+          // core.info("This is PR, " + e.title + " " + e.created_at);
+          // core.info(e.pull_request.url);
         } else {
-            for (let i = 0; i < iss.length; i++) {
-                const e = iss[i];
-                if (e.pull_request !== undefined) {
-                    // core.info("This is PR, " + e.title + " " + e.created_at);
-                    // core.info(e.pull_request.url);
-                } else {
-                    // let t = await getLastPRUpdateTime(e);
-                    // if (t !== null) {
-                    //     core.info(JSON.stringify(t));
-                    // }
-                    core.info(e.updated_at);
-                }
-            }
+          let assig = "";
+          for (let i = 0; i < e.assignees.length; i++) {
+            const u = e.assignees[i];
+            assig = assig + "," + u.login;
+          }
+          core.info(assig);
         }
+      }
     }
+  }
 
 }
 
 async function getIssues(now, num_page) {
-    const { data: iss } = await oc.rest.issues.listForRepo(
-        {
-            ...repo,
-            state: "open",
-            sort: "created",
-            direction: "asc",
-            per_page: num_page,
-            page: now
-        }
-    )
-    if (iss.length == 0) {
-        return undefined
+  const { data: iss } = await oc.rest.issues.listForRepo(
+    {
+      ...repo,
+      state: "open",
+      sort: "created",
+      direction: "asc",
+      per_page: num_page,
+      page: now
     }
-    return iss
+  )
+  if (iss.length == 0) {
+    return undefined
+  }
+  return iss
 }
 
 async function getLastPRUpdateTime(issue) {
-    let query = `query($repo:String!, $repo_owner: String!, $number_iss: Int!, $First: Int, $Skip: Int){
+  let query = `query($repo:String!, $repo_owner: String!, $number_iss: Int!, $First: Int, $Skip: Int){
   repository(name: $repo, owner: $repo_owner) {
     issue(number: $number_iss) {
       id
@@ -80,35 +81,35 @@ async function getLastPRUpdateTime(issue) {
     }
   }
 }`;
-    let hasNext = true;
-    let start = 0;
-    let per_page = 20;
-    let lastUpdate = 0;
-    let lastPR = null;
+  let hasNext = true;
+  let start = 0;
+  let per_page = 20;
+  let lastUpdate = 0;
+  let lastPR = null;
 
-    while (hasNext) {
-        let { repository } = await oc.graphql(query, {
-            "repo": repo.repo,
-            "repo_owner": repo.owner,
-            "number_iss": issue.number,
-            "First": per_page,
-            "Skip": start
-        });
-        hasNext = repository.issue.timelineItems.pageInfo.hasNextPage;
-        start += per_page;
-        let edges = repository.issue.timelineItems.edges;
-        for (let i = 0; i < edges.length; i++) {
-            const e = edges[i];
-            if (e.node !== undefined && e.node.source !== undefined && Object.keys(e.node).length != 0 && Object.keys(e.node.source).length != 0) {
-                t = Date.parse(e.node.source.updatedAt);
-                if (t > lastUpdate) {
-                    lastUpdate = t;
-                    lastPR = e.node.source;
-                }
-            }
+  while (hasNext) {
+    let { repository } = await oc.graphql(query, {
+      "repo": repo.repo,
+      "repo_owner": repo.owner,
+      "number_iss": issue.number,
+      "First": per_page,
+      "Skip": start
+    });
+    hasNext = repository.issue.timelineItems.pageInfo.hasNextPage;
+    start += per_page;
+    let edges = repository.issue.timelineItems.edges;
+    for (let i = 0; i < edges.length; i++) {
+      const e = edges[i];
+      if (e.node !== undefined && e.node.source !== undefined && Object.keys(e.node).length != 0 && Object.keys(e.node.source).length != 0) {
+        t = Date.parse(e.node.source.updatedAt);
+        if (t > lastUpdate) {
+          lastUpdate = t;
+          lastPR = e.node.source;
         }
+      }
     }
-    return lastPR;
+  }
+  return lastPR;
 }
 
 run()
