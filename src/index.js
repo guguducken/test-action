@@ -48,7 +48,7 @@ async function getIssues(now, num_page) {
     return iss
 }
 
-async function getPRTime(issue) {
+async function getLastPRUpdateTime(issue) {
     let query = `query($repo:String!, $repo_owner: String!, $number_iss: Int!, $First: Int, $Skip: Int){
   repository(name: $repo, owner: $repo_owner) {
     issue(number: $number_iss) {
@@ -77,22 +77,35 @@ async function getPRTime(issue) {
     }
   }
 }`;
-    let { issue: issue_a } = await oc.graphql(query, {
-        "repo": repo.repo,
-        "repo_owner": repo.owner,
-        "number_iss": issue.number,
-        "First": 100,
-        "Skip": 0
-    });
-    let edges = issue_a.timelineItems.edges;
-    for (let i = 0; i < edges.length; i++) {
-        const e = edges[i];
-        if (e.node === undefined || e.node.source === undefined || Object.keys(e.node).length == 0 || Object.keys(e.node.source).length == 0) {
-            core.info("skip " + issue.title + " " + i);
-        } else {
-            core.info(JSON.stringify(e.node.source));
+    let hasNext = true;
+    let start = 0;
+    let per_page = 20;
+    let lastUpdate = 0;
+    let lastPR;
+
+    while (hasNext) {
+        let { repository } = await oc.graphql(query, {
+            "repo": repo.repo,
+            "repo_owner": repo.owner,
+            "number_iss": issue.number,
+            "First": per_page,
+            "Skip": start
+        });
+        hasNext = repository.issue.timelineItems.pageInfo.hasNextPage;
+        start += per_page;
+        let edges = repository.issue.timelineItems.edges;
+        for (let i = 0; i < edges.length; i++) {
+            const e = edges[i];
+            if (e.node !== undefined || e.node.source !== undefined || Object.keys(e.node).length != 0 || Object.keys(e.node.source).length != 0) {
+                t = Date.parse(e.node.source.updatedAt);
+                if (t > lastUpdate) {
+                    lastUpdate = t;
+                    lastPR = e.node.source;
+                }
+            }
         }
     }
+    core.info(JSON.stringify(lastPR));
 }
 
 run()
