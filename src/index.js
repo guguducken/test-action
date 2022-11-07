@@ -14,6 +14,7 @@ async function run() {
         const iss = await getIssues(i, 100)
         if (iss === undefined) {
             core.info("finished");
+            break;
         } else {
             for (let i = 0; i < iss.length; i++) {
                 const e = iss[i];
@@ -21,6 +22,7 @@ async function run() {
                     // core.info("This is PR, " + e.title + " " + e.created_at);
                     // core.info(e.pull_request.url);
                 } else {
+                    core.info(e.title);
                     getPRTime(e);
                 }
             }
